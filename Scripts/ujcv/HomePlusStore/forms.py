@@ -1,5 +1,5 @@
 from django import forms
-from .models import Usuario, Articulo
+from .models import Usuario, Articulo, CategoriaArticulo, Departamento, Cargo
 from django.core.exceptions import ValidationError
 from datetime import date
 from django.utils import timezone
@@ -96,3 +96,33 @@ class ArticuloForm(forms.ModelForm):
         PrecioHistorico.objects.create(articulo=articulo, precio=articulo.precio, fecha=timezone.now())
         
         return articulo
+    
+class CategoriaArticuloForm(forms.ModelForm):
+    class Meta:
+        model = CategoriaArticulo
+        fields = "_all_"
+
+class DepartamentoForm(forms.ModelForm):
+    class Meta:
+        model = Departamento
+        fields = "_all_"
+
+
+
+class CargoForm(forms.ModelForm):
+    class Meta:
+        model = Cargo
+        fields = "_all_"
+
+    def clean_nombre(self):
+        nombre = self.cleaned_data.get('nombre')
+        if any(char.isdigit() for char in nombre):
+            raise forms.ValidationError("El nombre no puede contener números.")
+        return nombre
+
+    def clean_sueldo(self):
+        sueldo = self.cleaned_data.get('sueldo')
+        # Asegúrate de que el sueldo sea mayor o igual a 8000
+        if sueldo < 8000:
+            raise forms.ValidationError("El sueldo debe ser igual o mayor a 8000.")
+        return sueldo

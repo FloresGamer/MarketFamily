@@ -1,0 +1,51 @@
+{% block contenido %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+      <div class="card bg-dark text-white">
+        <div class="card-header">
+          <center><h1 class="mb-0"><i class="fas fa-pen"></i> Ingresar nurvo Departamento</h1></center>
+        </div>
+        <div class="card-body">
+  <form enctype="multipart/form-data" method="post" autocomplete="off">
+    <!-- Contenido del formulario -->
+    {% csrf_token %}
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    {{ form.media }}
+
+    <div class="mb-">
+      <label for="{{ form.nombre.id_for_label }}" class="form-label">{{ form.nombre.label }}</label>
+      {{ form.nombre }}
+      <script>
+        document.getElementById("{{ form.nombre.id_for_label }}").addEventListener("input", function() {
+          this.value = this.value.replace(/[0-9]/g, '');
+        });
+      </script>
+      {% for error in form.errors.nombre %}
+        <div class="invalid-feedback">
+          {{ error }}
+        </div>
+      {% endfor %}
+    </div>
+
+
+    <div class="mb-">
+      <label for="{{ form.descripcion.id_for_label }}" class="form-label">{{ form.descripcion.label }}</label>
+      {{ form.descripcion }}
+      {% for error in form.errors.descripcion %}
+        <div class="invalid-feedback">
+          {{ error }}
+        </div>
+      {% endfor %}
+    </div>
+
+
+    <button type="submit" class="btn btn-primary mt-3">Enviar Información</button>
+    <a name="" id="" class="btn btn-primary mt-3" href="{% url 'Departamento_listar' %}" role="button">Cancelar</a>
+    </form>
+</div>  
+</div>
+</div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block titulo %} Eliminar un CategoriaArticulo {% endblock %}
+
+{% block contenido %}
+
+<div class="card">
+    <div class="card-header">
+        Eliminar informacion de un CategoriaArticulo
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Datos del CategoriaArticulo</h4>
+        
+        {% include 'CategoriaArticulo/form.html' %}
+
+
+    </div>
+    <div class="card-footer text-muted">
+        
+    </div>
+</div>
+
+{% endblock %}

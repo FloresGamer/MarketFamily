@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block titulo %} Editar un nuevo Departamento {% endblock %}
+
+{% block contenido %}
+
+<div class="card">
+    <div class="card-header">
+        Editar informacion de un Departamento
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Datos del Departamento</h4>
+        
+        {% include 'Departamento/form.html' %}
+
+
+    </div>
+    <div class="card-footer text-muted">
+        
+    </div>
+</div>
+
+{% endblock %}

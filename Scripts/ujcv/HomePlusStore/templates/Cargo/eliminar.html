@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block titulo %} Eliminar un Cargo {% endblock %}
+
+{% block contenido %}
+
+<div class="card">
+    <div class="card-header">
+        Eliminar informacion de un Cargo
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Datos del Cargo</h4>
+        
+        {% include 'Cargo/form.html' %}
+
+
+    </div>
+    <div class="card-footer text-muted">
+        
+    </div>
+</div>
+
+{% endblock %}

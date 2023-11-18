@@ -103,3 +103,130 @@ class ArticuloEliminarView(DeleteView):
     model = Articulo
     success_url = reverse_lazy('Articulo_listar')
     template_name = 'Articulo/eliminar.html'
+
+#CategoriaArticulo
+
+class CategoriaArticuloListView(LoginRequiredMixin, ListView):
+    model = CategoriaArticulo
+    template_name = 'CategoriaArticulo/index.html'
+    context_object_name = 'CategoriaArticulo'
+    login_url = '/login'
+
+
+class CategoriaArticuloCreateView(LoginRequiredMixin, CreateView):
+    model = CategoriaArticulo
+    form_class = CategoriaArticuloForm
+    template_name = 'CategoriaArticulo/crear.html'
+    success_url = '/CategoriaArticulo/'
+    login_url = '/login'
+
+    def form_valid(self, form):
+        if form.is_valid():
+            # Guarda el formulario solo si es válido
+            return super().form_valid(form)
+        else:
+            # El formulario no es válido, vuelve a renderizar la página con errores
+            return self.render_to_response(self.get_context_data(form=form))
+
+
+class CategoriaArticuloUpdateView(LoginRequiredMixin, UpdateView):
+    model = CategoriaArticulo
+    form_class = CategoriaArticuloForm
+    template_name = 'CategoriaArticulo/editar.html'
+    success_url = reverse_lazy('CategoriaArticulo_listar')
+    login_url = '/login'
+
+    def get_object(self, queryset=None):
+        CategoriaArticulo_id = self.kwargs['pk']
+        return CategoriaArticulo.objects.get(id_categoria=CategoriaArticulo_id)
+    
+
+
+class CategoriaArticuloEliminarView(LoginRequiredMixin, DeleteView):
+    model = CategoriaArticulo
+    success_url = reverse_lazy('CategoriaArticulo_listar')
+    template_name = 'CategoriaArticulo/eliminar.html'
+    login_url = '/login'
+
+
+
+#Departamento
+
+class DepartamentoListView(LoginRequiredMixin, ListView):
+    model = Departamento
+    template_name = 'Departamento/index.html'
+    context_object_name = 'departamentos'  
+    login_url = '/login'
+
+
+class DepartamentoCreateView(LoginRequiredMixin, CreateView):
+    model = Departamento
+    form_class = DepartamentoForm
+    template_name = 'Departamento/crear.html'
+    success_url = '/Departamento/'
+    login_url = '/login'
+
+    def form_valid(self, form):
+        if form.is_valid():
+            # Guarda el formulario solo si es válido
+            return super().form_valid(form)
+        else:
+            # El formulario no es válido, vuelve a renderizar la página con errores
+            return self.render_to_response(self.get_context_data(form=form))
+
+class DepartamentoUpdateView(LoginRequiredMixin, UpdateView):
+    model = Departamento
+    form_class = DepartamentoForm
+    template_name = 'Departamento/editar.html'
+    success_url = reverse_lazy('Departamento_listar')
+    login_url = '/login'
+
+    def get_object(self, queryset=None):
+        Departamento_id = self.kwargs['pk']
+        return Departamento.objects.get(id=Departamento_id)
+    
+
+class DepartamentoEliminarView(LoginRequiredMixin, DeleteView):
+    model = Departamento
+    success_url = reverse_lazy('Departamento_listar')
+    template_name = 'Departamento/eliminar.html'
+    login_url = '/login'
+
+
+#Cargo
+
+class CargoListView(LoginRequiredMixin, ListView):
+    model = Cargo
+    template_name = 'Cargo/index.html'
+    context_object_name = 'cargos'
+    login_url = '/login'
+
+class CargoCreateView(LoginRequiredMixin, CreateView):
+    model = Cargo
+    form_class = CargoForm
+    template_name = 'Cargo/crear.html'
+    success_url = reverse_lazy('Cargo_listar')
+    login_url = '/login'
+
+    def form_valid(self, form):
+        if form.is_valid():
+            return super().form_valid(form)
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
+
+class CargoUpdateView(LoginRequiredMixin, UpdateView):
+    model = Cargo
+    form_class = CargoForm
+    template_name = 'Cargo/editar.html'
+    success_url = reverse_lazy('Cargo_listar')
+    login_url = '/login'
+
+    def get_object(self, queryset=None):
+        cargo_id = self.kwargs['pk']
+        return Cargo.objects.get(id=cargo_id)
+
+class CargoEliminarView(LoginRequiredMixin, DeleteView):
+    model = Cargo
+    success_url = reverse_lazy('Cargo_listar')
+    template_name = 'Cargo/eliminar.html'
+    login_url = '/login'
