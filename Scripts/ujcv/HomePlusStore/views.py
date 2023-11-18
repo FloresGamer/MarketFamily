@@ -229,4 +229,4 @@ class CargoEliminarView(LoginRequiredMixin, DeleteView):
     model = Cargo
     success_url = reverse_lazy('Cargo_listar')
     template_name = 'Cargo/eliminar.html'
-    login_url = '/login'
+    login_url = '/login'

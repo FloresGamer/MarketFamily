@@ -1,5 +1,5 @@
 from django.contrib import admin
-from HomePlusStore.models import (Usuario, Articulo, CategoriaArticulo, Departamento, Cargo)
+from HomePlusStore.models import (Usuario, Articulo, CategoriaArticulo, Departamento,Cargo)
 
 admin.site.register(Usuario)
 admin.site.register(Articulo)

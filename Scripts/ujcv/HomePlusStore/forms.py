@@ -1,5 +1,5 @@
 from django import forms
-from .models import Usuario, Articulo, CategoriaArticulo, Departamento, Cargo
+from .models import Usuario, Articulo, CategoriaArticulo, Departamento,Cargo
 from django.core.exceptions import ValidationError
 from datetime import date
 from django.utils import timezone
