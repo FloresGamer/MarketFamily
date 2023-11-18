@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block titulo %}Inicio de sesión{% endblock %}
+
+{% block contenido %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card mt-5">
+        <div class="card-body">
+          <h3 class="card-title text-center mb-3">Inicio de sesión</h3>
+          {% if form.errors %}
+            <div class="alert alert-danger">
+              <ul>
+                {% for field in form %}
+                  {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+          <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="id_username">Usuario</label>
+              <input type="text" name="username" class="form-control" id="id_username" placeholder="Ingrese su usuario">
+            </div>
+            <div class="form-group">
+              <label for="id_password">Contraseña</label>
+              <input type="password" name="password" class="form-control" id="id_password" placeholder="Ingrese su contraseña">
+            </div>
+            <div class="text-center mt-3"> <!-- Contenedor centrado con margen arriba -->
+              <button type="submit" class="btn btn-primary mx-auto">Ingresar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock contenido %}

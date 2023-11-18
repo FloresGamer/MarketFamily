@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load static %}
+{% block titulo %}Market Family - Hogar Feliz{% endblock %}
+
+{% block contenido %}
+
+<style>
+  /* Agrega estilos de posición para la imagen */
+  .corner-image-container {
+    position: fixed;
+    top: 80px; /* Ajusta la distancia desde la parte superior según sea necesario */
+    right: 20px; /* Ajusta la distancia desde la derecha según sea necesario */
+    z-index: 9999; /* Asegura que esté en la parte superior de otros elementos */
+  }
+
+  .corner-image-container img {
+    width: 150px; /* Ajusta el ancho de la imagen según sea necesario */
+    height: auto; /* Mantén la proporción original de la imagen */
+  }
+
+  /* Centra el texto en la sección hero */
+  .hero-text {
+    text-align: center;
+  }
+
+  /* Sube los elementos de características 1 centímetro */
+  .features {
+    margin-top: 1cm; /* Ajusta la distancia superior según sea necesario */
+  }
+
+  /* Estilos para los elementos de características */
+  .feature h3 {
+    color: #000; /* Color negro por defecto */
+    font-weight: bold; /* Texto en negrita */
+    margin-bottom: 5px; /* Espacio inferior */
+    margin-top: 1cm; /* Sube los elementos 1 centímetro */
+  }
+
+  /* Cambia el color de las frases a blanco y sube los elementos 1 centímetro */
+  .feature p {
+    color: #fff; /* Color blanco */
+    font-weight: bold; /* Texto en negrita */
+    margin-top: 1cm; /* Sube los elementos 1 centímetro */
+  }
+
+  /* Sube solo "Explora nuestra tienda" 2 centímetros */
+  .explore-button {
+    margin-top: 2cm; /* Sube los elementos 2 centímetros */
+  }
+</style>
+
+<section class="hero">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6 hero-text">
+        <h1 class="display-4 fw-bold">Bienvenidos a Market Family</h1>
+        <p class="lead" style="color: #fff; font-weight: bold; margin-top: 1cm;">Transforma tu hogar con decisiones que hacen la diferencia. En nuestra tienda, encontrarás todo lo que necesitas para un hogar feliz y saludable.</p>
+        <a href="{% url 'Usuario_listar' %}" class="btn btn-primary btn-lg explore-button">Explora nuestra tienda</a>
+      </div>
+      <div class="col-md-6">
+        <!-- Agrega el contenedor para la imagen en la esquina superior derecha -->
+        <div class="corner-image-container">
+          <img src="{% static '/img/Logomk.png' %}" alt="Market Family">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="feature">
+          <i class="fas fa-shopping-cart fa-3x"></i>
+          <h3 style="margin-top: 1cm;">Compra Fácil</h3>
+          <p style="margin-top: 0.2cm;">Explora nuestra amplia gama de productos y compra de manera rápida y sencilla.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature">
+          <i class="fas fa-truck fa-3x"></i>
+          <h3 style="margin-top: 1cm;">Envío Rápido</h3>
+          <p style="margin-top: 0.2cm;">Recibe tus productos en la puerta de tu hogar en poco tiempo.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature">
+          <i class="far fa-heart fa-3x"></i>
+          <h3 style="margin-top: 1cm;">Hogar Feliz</h3>
+          <p style="margin-top: 0.2cm;">Mejora tu hogar y tu vida con productos de calidad que te hacen feliz.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

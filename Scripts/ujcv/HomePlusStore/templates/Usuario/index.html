@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+
+{% block titulo %}Lista de Usuarios{% endblock %}
+
+{% block contenido %}
+
+
+
+<div class="card">
+    <div class="card-header">
+        <a name="" id="" class="btn btn-success" href="{% url 'Usuario_crear' %}" role="button">Agregar un Usuario</a>
+    </div>
+
+    <div class="card-body">
+        <h4 class="card-title">Usuario</h4>
+        
+        <div class="table-responsive">
+            <table id="Usuario" class="table table-striped" style="width:140%">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Documento</th>
+                        <th>contraseña</th>
+                        <th>Email</th>
+                        <th>Telefono</th>
+                        <th>fecha de Nac</th>
+                        <th>sexo</th>
+                        <th>direccion</th>
+                        <th>foto de perfil</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    {% for Usuario in Usuarios %}
+                    <tr>
+                        <td>{{ Usuario.id_usuario }}</td>
+                        <td>{{ Usuario.nombre }}</td>
+                        <td>{{ Usuario.apellido }}</td>
+                        <td>{{ Usuario.get_masked_password }}</td>  
+                        <th>{{ Usuario.correo_electronico }}</th>
+                        <th>{{ Usuario.numero_telefono }}</th>
+                        <th>{{ Usuario.fecha_nacimiento }}</th>
+                        <th>{{ Usuario.sexo }}</th>
+                        <th>{{ Usuario.direccion }}</th>
+                        <td>
+                            {% if Usuario.foto_de_perfil %}
+                                <img src="{{ Usuario.foto_de_perfil.url }}" alt="{{ Usuario.nombre }}'s perfil" height="100">
+                            {% else %}
+                                <p>No hay foto de perfil</p>
+                            {% endif %}
+                        </td>
+                            <td> 
+                            <a name="" id="" class="btn btn-info" href="{% url 'Usuario_editar' Usuario.pk %}" role="button">Editar</a>
+                            |
+                            <a name="" id="" class="btn btn-danger" href="{% url 'Usuario_eliminar' Usuario.id_usuario %}" role="button">Borrar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    
+
+                </tbody>
+            </table>
+        </div>
+        
+
+    </div>
+    <div class="card-footer text-muted">
+        Footer
+    </div>
+</div>
+
+{% endblock %}
+{% block js_page %}
+<script>
+  $(document).ready(function() {
+    // Inicializar DataTable
+    var table = $('#Usuario').DataTable({
+      paging: true,
+      scrollY: true,
+      scrollX: true,
+      scrollCollapse: true,
+      pagingType: 'full_numbers',
+      dom: 'Blfrtip',
+      buttons: [
+        'csv', 'excel', {
+          extend: 'pdf',
+          orientation: 'landscape',
+          pageSize: 'LEGAL',
+          exportOptions: {
+            columns: ':visible'
+          }
+        }, 'print'
+      ],
+      lengthMenu: [
+        [10, 25, 50, -1],
+        ['10 Filas', '25 Filas ', '50 Filas', 'Mostrar todo']
+      ],
+      "language": {
+        "url": "//cdn.datatables.net/plug-ins/1.12.1/i18n/es-ES.json"
+      }
+    });
+
+    // Destruir DataTable antes de reinicializar (si ya está inicializado)
+    $('#Usuario tbody').on('click', 'tr', function() {
+      var data = table.row(this).data();
+      // Agrega aquí tu lógica para abrir el documento o realizar otras acciones si es necesario
+    });
+  });
+</script>
+{% endblock %}

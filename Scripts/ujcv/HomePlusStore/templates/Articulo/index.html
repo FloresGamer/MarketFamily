@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block titulo %} Lista de Artículos {% endblock %}
+
+{% block contenido %}
+<div class="card">
+    <div class="card-header">
+        <a class="btn btn-success" href="{% url 'Articulo_crear' %}" role="button">Agregar un Artículo</a>
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Artículos</h4>
+        <div class="table-responsive">
+            <table id="Articulo" class="table table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Id Artículo</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Fecha de Creación</th>
+                        <th>Última Modificación</th>
+                        <th>Imagen</th>
+                        <th>Categoría</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for articulo in articulos %}
+                        <tr>
+                            <td>{{ articulo.id_articulo }}</td>
+                            <td>{{ articulo.nombre }}</td>
+                            <td>{{ articulo.descripcion }}</td>
+                            <td>Lps. {{ articulo.precio }}</td>
+                            <td>{{ articulo.fecha_creacion }}</td>
+                            <td>{{ articulo.fecha_ultima_modificacion }}</td>
+                            <td>
+                                {% if articulo.imagen %}
+                                    <img src="{{ articulo.imagen.url }}" alt="{{ articulo.nombre }}'s imagen" height="100">
+                                {% else %}
+                                    <p>No hay imagen</p>
+                                {% endif %}
+                            </td>
+                            <td>{{ articulo.categoria.nombre }}</td>
+                            <td> 
+                                <a class="btn btn-info" href="{% url 'Articulo_editar' articulo.pk %}" role="button">Editar</a>
+                                |
+                                <a class="btn btn-danger" href="{% url 'Articulo_eliminar' articulo.id_articulo %}" role="button">Borrar</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer text-muted">
+        Footer
+    </div>
+</div>
+{% endblock %}
+
+{% block js_page %}
+<script>
+  $(document).ready(function() {
+    // Inicializar DataTable
+    var table = $('#Articulo').DataTable({
+      paging: true,
+      scrollY: true,
+      scrollX: true,
+      scrollCollapse: true,
+      pagingType: 'full_numbers',
+      dom: 'Blfrtip',
+      buttons: [
+        'csv', 'excel', {
+          extend: 'pdf',
+          orientation: 'landscape',
+          pageSize: 'LEGAL',
+          exportOptions: {
+            columns: ':visible'
+          }
+        }, 'print'
+      ],
+      lengthMenu: [
+        [10, 25, 50, -1],
+        ['10 Filas', '25 Filas ', '50 Filas', 'Mostrar todo']
+      ],
+      "language": {
+        "url": "//cdn.datatables.net/plug-ins/1.12.1/i18n/es-ES.json"
+      }
+    });
+
+    // Destruir DataTable antes de reinicializar (si ya está inicializado)
+    $('#Articulo tbody').on('click', 'tr', function() {
+      var data = table.row(this).data();
+      // Agrega aquí tu lógica para abrir el documento o realizar otras acciones si es necesario
+    });
+  });
+</script>
+{% endblock %}
