@@ -1,5 +1,5 @@
 from django import forms
-from .models import Usuario, Articulo, CategoriaArticulo, Departamento,Cargo, Colaborador, Sucursal, PrecioHistorico
+from .models import Usuario, Articulo, CategoriaArticulo, Departamento,Cargo
 from django.core.exceptions import ValidationError
 from datetime import date
 from django.utils import timezone
@@ -126,65 +126,3 @@ class CargoForm(forms.ModelForm):
         if sueldo < 8000:
             raise forms.ValidationError("El sueldo debe ser igual o mayor a 8000.")
         return sueldo
-
-
-class ColaboradorForm(forms.ModelForm):
-    fecha_nacimiento = forms.DateField(
-        widget=forms.DateInput(
-            format='%Y-%m-%d',
-            attrs={'type': 'date', 'value': '2000-01-01'}
-        )
-    )
-
-    class Meta:
-        model = Colaborador
-        fields = '_all_'
-        widgets = {
-            'contraseña': forms.PasswordInput(render_value=True),
-        }
-
-    def clean_perfil(self):
-        perfil = self.cleaned_data.get('perfil')
-        if not perfil:
-            raise forms.ValidationError("La foto de perfil es obligatoria. Por favor, sube una imagen.")
-        return perfil
-    
-    def clean_fecha_nacimiento(self):
-        fecha_nacimiento = self.cleaned_data.get('fecha_nacimiento')
-        fecha_minima = date(1920, 1, 1)
-        fecha_actual = date.today()
-        edad_minima = 18
-
-        if fecha_nacimiento < fecha_minima or fecha_nacimiento > fecha_actual:
-            raise forms.ValidationError(
-                'La fecha de nacimiento debe estar entre el 1 de enero de 1920 y la fecha actual.'
-            )
-
-        edad = fecha_actual.year - fecha_nacimiento.year - ((fecha_actual.month, fecha_actual.day) < (fecha_nacimiento.month, fecha_nacimiento.day))
-
-        if edad < edad_minima:
-            raise forms.ValidationError(
-                f'Debes ser mayor de {edad_minima} años para registrarte.'
-            )
-
-        return fecha_nacimiento
-    
-    def _init_(self, *args, **kwargs):
-        super()._init_(*args, **kwargs)
-        # Excluir la opción 'cliente' del queryset del campo 'rol'
-        self.fields['rol'].queryset = self.fields['rol'].queryset.exclude(nombre='cliente')
-
-class SucursalForm(forms.ModelForm):
-    class Meta:
-        model = Sucursal
-        fields = "_all_"
-        widgets = {
-            'hora_apertura': forms.TimeInput(attrs={'type': 'time'}),
-            'hora_cierre': forms.TimeInput(attrs={'type': 'time'}),
-            'fecha_inauguracion': forms.DateInput(attrs={'type': 'date'}),
-        }
-
-class PrecioHistoricoForm(forms.ModelForm):
-    class Meta:
-        model = PrecioHistorico
-        fields = "_all_"

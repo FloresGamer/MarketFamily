@@ -35,17 +35,5 @@ urlpatterns = [
     path('Cargo/<int:pk>/editar/', CargoUpdateView.as_view(), name='Cargo_editar'),
     path('Cargo/<int:pk>/eliminar/', CargoEliminarView.as_view(), name='Cargo_eliminar'),
 
-    path('Colaborador/', ColaboradorListView.as_view(), name='Colaborador_listar'),
-    path('Colaboradores/crear/', ColaboradorCreateView.as_view(), name='Colaborador_crear'),
-    path('Colaboradores/<int:pk>/editar/', ColaboradorUpdateView.as_view(), name='Colaborador_editar'),
-    path('Colaboradores/<int:pk>/eliminar/', ColaboradorEliminarView.as_view(), name='Colaborador_eliminar'),
-    
-    path('Sucursal/', SucursalListView.as_view(), name='Sucursal_listar'),
-    path('Sucursales/crear/', SucursalCreateView.as_view(), name='Sucursal_crear'),
-    path('Sucursales/<int:pk>/editar/', SucursalUpdateView.as_view(), name='Sucursal_editar'),
-    path('Sucursales/<int:pk>/eliminar/', SucursalEliminarView.as_view(), name='Sucursal_eliminar'),
-
-    path('PrecioHistorico/', PrecioHistoricoListView.as_view(), name='PrecioHistorico_listar'),
-
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
