@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block titulo %} Lista de Colaboradores {% endblock %}
+
+{% block contenido %}
+
+
+<div class="card">
+    <div class="card-header">
+        <a name="" id="" class="btn btn-success" href="{% url 'Colaborador_crear' %}" role="button">Agregar un Colaborador</a>
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Colaboradores</h4>
+
+        <div class="table-responsive">
+            <table id="colaborador" class="table table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Tipo documento</th>
+                        <th>Documento identidad</th>
+                        <th>Direccion</th>
+                        <th>sexo</th>
+                        <th>Fecha de Nac</th>
+                        <th>Email</th>
+                        <th>Telefono</th>
+                        <th>cargo</th>
+                        <th>Sueldo</th>
+                        <th>Fecha de contratacion</th>
+                        <th>Departamento</th>
+                        <th>Perfil</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for colaborador in colaboradores %}
+                    <tr>
+                        <td>{{ colaborador.id_colaborador }}</td>
+                        <td>{{ colaborador.nombre }}</td>
+                        <td>{{ colaborador.apellido }}</td>
+                        <td>
+                          {% if colaborador.Documentopersonal %}
+                              {{ colaborador.Documentopersonal.nombre }}
+                          {% else %}
+                              N/A
+                          {% endif %}
+                      </td>
+                        <td>
+                            {% if colaborador.documento_identidad %}
+                                <a href="{{ colaborador.documento_identidad.url }}" style="color: blue;" target="_blank">
+                                    {{ colaborador.documento_identidad.name|cut:"documents/" }}
+                                </a>
+                            {% else %}
+                                No hay documento
+                            {% endif %}
+                        </td>
+                        <td>{{ colaborador.direccion }}</td>
+                        <td>{{ colaborador.sexo }}</td>
+                        <td>{{ colaborador.fecha_nacimiento }}</td>
+                        <td>{{ colaborador.correo_electronico }}</td>
+                        <td>{{ colaborador.numero_telefono }}</td>
+                        <td>{{ colaborador.cargo }}</td>
+                        <td>{{ colaborador.sueldo_cargo }}</td>
+                        <td>{{ colaborador.fecha_contratacion }}</td>
+                        <td>{{ colaborador.departamento }}</td>
+                        <td>
+                            {% if colaborador.perfil %}
+                                <img src="{{ colaborador.perfil.url }}" alt="{{ colaborador.nombre }}'s perfil" height="100">
+                            {% else %}
+                                <p>No hay foto de perfil</p>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a name="" id="" class="btn btn-info" href="{% url 'Colaborador_editar' colaborador.pk %}" role="button">Editar</a>
+                            |
+                            <a name="" id="" class="btn btn-danger" href="{% url 'Colaborador_eliminar' colaborador.id_colaborador %}" role="button">Borrar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <div class="card-footer text-muted">
+        Footer
+    </div>
+</div>
+
+{% endblock %}
+{% block js_page %}
+<script>
+  $(document).ready(function() {
+    // Inicializar DataTable
+    var table = $('#colaborador').DataTable({
+      paging: true,
+      scrollY: true,
+      scrollX: true,
+      scrollCollapse: true,
+      pagingType: 'full_numbers',
+      dom: 'Blfrtip',
+      buttons: [
+        'csv', 'excel', {
+          extend: 'pdf',
+          orientation: 'landscape',
+          pageSize: 'LEGAL',
+          exportOptions: {
+            columns: ':visible'
+          }
+        }, 'print'
+      ],
+      lengthMenu: [
+        [10, 25, 50, -1],
+        ['10 Filas', '25 Filas ', '50 Filas', 'Mostrar todo']
+      ],
+      "language": {
+        "url": "//cdn.datatables.net/plug-ins/1.12.1/i18n/es-ES.json"
+      }
+    });
+
+    // Destruir DataTable antes de reinicializar (si ya está inicializado)
+    $('#colaborador tbody').on('click', 'tr', function() {
+      var data = table.row(this).data();
+      // Agrega aquí tu lógica para abrir el documento o realizar otras acciones si es necesario
+    });
+  });
+</script>
+{% endblock %}

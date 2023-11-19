@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block titulo %} Eliminar un Colaborador {% endblock %}
+
+{% block contenido %}
+
+<div class="card">
+    <div class="card-header">
+        Eliminar informacion de un Colaborador
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Datos del Colaborador</h4>
+        
+        {% include 'Colaborador/form.html' %}
+
+
+    </div>
+    <div class="card-footer text-muted">
+        
+    </div>
+</div>
+
+{% endblock %}
